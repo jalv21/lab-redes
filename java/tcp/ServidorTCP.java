@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.time.LocalDateTime;
 
 public class ServidorTCP {
     public static void main(String[] args) throws IOException {
@@ -20,11 +21,17 @@ public class ServidorTCP {
                 
                 while ((mensagem = entrada.readLine()) != null) {
                     System.out.println("[TCP] Recebido: " + mensagem);
+
+                    if(mensagem.equalsIgnoreCase("hora")) {
+                        saida.println("Hora Atual: " + LocalDateTime.now());
+                    } else {
+                        saida.println("Monitor responde: recebi sua mensagem -> \"" + mensagem + "\"");
+                    }
+                        
                     if (mensagem.equalsIgnoreCase("sair")) {
                         saida.println("Encerrando conexão. Até mais!");
                         break;
                     }
-                    saida.println("Monitor responde: recebi sua mensagem -> \"" + mensagem + "\"");
                 }
             }
             System.out.println("[TCP] Servidor encerrado.");

@@ -12,5 +12,5 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as cliente:
         mensagem = input("> ")
         cliente.sendall((mensagem + "\n").encode("utf-8"))
         print(arquivo.readline().strip())
-        if mensagem.lower() == "sair" :
+        if mensagem.lower() == "sair":
             break

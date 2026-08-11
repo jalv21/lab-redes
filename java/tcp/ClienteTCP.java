@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 
 public class ClienteTCP {
-    public void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
         String host = "localhost";
         int porta = 5042;

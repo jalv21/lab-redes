@@ -1,10 +1,11 @@
 import socket
+from datetime import datetime
 
 HOST = "0.0.0.0"
 PORTA = 5042
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as servidor:
-    servidor.setsockopt(socket.SQL_SOCKET, socket.SO_REUSEADDR, 1)
+    servidor.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     servidor.bind((HOST, PORTA))
     servidor.listen(1)
 
@@ -18,10 +19,15 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as servidor:
             if not dados:
                 break
             print(f"[TCP] Recebido: {dados}")
+
+            if dados.lower() == "hora" :
+                horaAtual = datetime.now()
+                conexao.sendall(horaAtual.strftime("%Y-%m-%d\n").encode("utf-8"))
+
             if dados.lower() == "sair":
                 conexao.sendall("Encerrando conexão. Até mais!\n".encode("utf-8"))
                 break
             resposta = f'Monitor responde: recebi sua mensagem -> "{dados}"'
-            conexao.sendall(resposta.encode("utf-8"))
-            
+            conexao.sendall((resposta + "\n").encode("utf-8"))
+
 print("[TCP] Servidor encerrado.")
